@@ -9,6 +9,8 @@
 #include "netinet/in.h"
 #include "unistd.h"
 
+#include "client_utils.h"
+
 int main(){
     // create the client socket //
     int client_socket = socket(AF_INET, SOCK_STREAM, 0);
@@ -31,36 +33,17 @@ int main(){
     FD_SET(client_socket, &read_fds);
     FD_SET(STDIN_FILENO, &read_fds); // keyboard input //
     int max_fd = client_socket > STDIN_FILENO ? client_socket : STDIN_FILENO;
+    bool check = true;
 
-    while(true){
+    while(check){
         fd_set read_fds_copy = read_fds;
         select(max_fd+1, &read_fds_copy, NULL, NULL, NULL);
 
         // check if the current active fd is from client //
-        if(FD_ISSET(client_socket, &read_fds_copy)){
-            // receive server message //
-            char message[1056];
-            int bytes = recv(client_socket, &message, sizeof(message)-1, 0);
-            message[bytes] = '\0'; // Null termination //
-            printf("%s", message);
-            fflush(stdout);
-        }
+        receiveMessage(&client_socket, &read_fds_copy);
 
         // check if the current active fd is from keyboard //
-        if(FD_ISSET(STDIN_FILENO, &read_fds_copy)){
-            char *out_message = NULL;
-            size_t len = 0;
-            getline(&out_message, &len, stdin);
-
-            if(strcmp(out_message, "EXIT\n") != 0){
-                send(client_socket, out_message, len, 0);
-            }else{
-                free(out_message);
-                break;
-            }
-
-            free(out_message);
-        }
+        check = sendMessage(&read_fds_copy, &client_socket);
     }
 
     // close the client //
