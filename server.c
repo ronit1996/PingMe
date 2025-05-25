@@ -73,14 +73,14 @@ int main(){
                         continue;
                     }
 
-                    // Greet the client //
+                    // Print client details //
                     printf("-------------------------------\n");
                     printf("Connected to, %s\n", client_ip);
                     fflush(stdout);
 
                     // Send a message to the client //
                     char outgoing_message[256] = {0};
-                    sprintf(outgoing_message, "Hello, %s", client_ip);
+                    sprintf(outgoing_message, "Hello, %s\n", client_ip);
                     send(client, outgoing_message, strlen(outgoing_message), 0);
 
                     // increase max fd //
@@ -101,7 +101,7 @@ int main(){
                         // Loop over all the clients store in the read_fd and send to everyone except the server and sender //
                         int fd_send;
                         for(fd_send = 0; fd_send <= max_fd; fd_send++){
-                            if(FD_ISSET(fd_recv, &master_fd) && fd_send != fd_recv && fd_send != server_socket){
+                            if(FD_ISSET(fd_send, &master_fd) && fd_send != fd_recv && fd_send != server_socket){
                                 printf("check send block\n");
                                 fflush(stdout);
                                 send(fd_send, incoming_message, strlen(incoming_message), 0);

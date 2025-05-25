@@ -42,7 +42,7 @@ int main(){
             char message[1056];
             int bytes = recv(client_socket, &message, sizeof(message)-1, 0);
             message[bytes] = '\0'; // Null termination //
-            printf("Server message: %s\n", message);
+            printf("%s", message);
             fflush(stdout);
         }
 
@@ -50,8 +50,6 @@ int main(){
         if(FD_ISSET(STDIN_FILENO, &read_fds_copy)){
             char *out_message = NULL;
             size_t len = 0;
-            printf("type: ");
-            fflush(stdout);
             getline(&out_message, &len, stdin);
 
             if(strcmp(out_message, "EXIT\n") != 0){
