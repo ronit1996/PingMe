@@ -6,7 +6,8 @@
 #include <string.h>
 #include <arpa/inet.h>
 #include "server_utils.h"
-#include "unistd.h"
+#include <unistd.h>
+#include "../message.h"
 
 void print_client_details(char *client_ip){
     printf("Connected: %s\n", client_ip);
@@ -15,7 +16,7 @@ void print_client_details(char *client_ip){
 
 void greet_client(int *client, char *client_ip){
     // Send a message to the client //
-    char outgoing_message[256] = {0};
+    char outgoing_message[MESSAGE_SIZE] = {0};
     sprintf(outgoing_message, "Hello, %s\n", client_ip);
     send(*client, outgoing_message, strlen(outgoing_message), 0);
 }
@@ -42,7 +43,7 @@ void handle_client(int *server_socket, fd_set *master_fd, int *client, char *cli
     print_client_details(client_ip);
 
     // Greet the client //
-    greet_client(client, client_ip);
+    //greet_client(client, client_ip);
 
     // increase max fd //
     (*max_fd)++;
@@ -71,7 +72,7 @@ void handleDisconnection(int *fd_recv, fd_set *master_fd, char *client_ip){
 
 void echoMessage(int *fd_recv, int *max_fd, fd_set *master_fd, int *server_socket, char *client_ip){
     // if a client isn't trying to connect that means it's trying to send a message //
-    char incoming_message[1025] = {0};
+    char incoming_message[MESSAGE_SIZE] = {0};
     int bytes = recv(*fd_recv, incoming_message, sizeof(incoming_message)-1, 0);
 
     // Send the message to all clients if it's not empty
