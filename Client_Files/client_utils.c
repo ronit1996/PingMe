@@ -28,19 +28,15 @@ void username(struct chatMessage *msg_details_struct){
     free(username);
 }
 
-void printMessage(struct chatMessage *msg_details){
-    if(strcmp(msg_details->message, "Null") !=0){
-        printf("%s: %s\n", msg_details->client_username, msg_details->message);
-        fflush(stdout);
-    }
-}
-
 void readInput(struct chatMessage *msg_details){
-    //printf("%s: ", msg_details->user_username);
     char *typed_message;
     size_t len = 0;
     getline(&typed_message, &len, stdin);
     
+    // remove the typed line and then display it again properly with username //
+    printf("\033[A\33[2K\r");
+    printf("%s: %s", msg_details->user_username, typed_message);
+
     // remove the new line character at the end //
     size_t msglen = strlen(typed_message);
     if(len > 0 && typed_message[msglen-1] == '\n'){
@@ -53,6 +49,13 @@ void readInput(struct chatMessage *msg_details){
     }else{
         strncpy(msg_details->commands, typed_message, MESSAGE_SIZE);
         free(typed_message);
+    }
+}
+
+void printMessage(struct chatMessage *msg_details){
+    if(strcmp(msg_details->message, "Null") !=0){
+        printf("%s: %s\n", msg_details->client_username, msg_details->message);
+        fflush(stdout);
     }
 }
 
