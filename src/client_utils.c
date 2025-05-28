@@ -8,12 +8,12 @@
 #include <string.h>
 #include "message.h"
 
-void processArgs(int argc, char *argv[], u_int16_t *port, char *ip){
+void processArgs(int argc, char *argv[], u_int16_t *port, char **ip){
     if(argc != 3){
         fprintf(stderr, "Usage: %s <port> <ip>", argv[0]);
     }    
     *port = atoi(argv[1]);
-    ip = argv[2];
+    *ip = argv[2];
 }
 
 void receiveMessage(int *client_socket, char *recvd_data){

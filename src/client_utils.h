@@ -3,7 +3,7 @@
 #include "sys/select.h"
 #include "message.h"
 
-void processArgs(int argc, char *argv[], u_int16_t *port, char *ip);
+void processArgs(int argc, char *argv[], u_int16_t *port, char **ip);
 void receiveMessage(int *client_socket, char *recvd_data);
 void sendMessage(int *client_socket, char *outgoing_data);
 void username(struct chatMessage *msg_details_struct);

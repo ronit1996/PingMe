@@ -15,8 +15,8 @@
 int main(int argc, char *argv[]){
     // process the command line arguments //
     u_int16_t port;
-    char *ip;
-    processArgs(argc, argv, &port, ip);
+    char *ip=NULL;
+    processArgs(argc, argv, &port, &ip);
     
     // create the message details struct //
     struct chatMessage message_details;
