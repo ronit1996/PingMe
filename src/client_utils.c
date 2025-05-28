@@ -16,6 +16,13 @@ void processArgs(int argc, char *argv[], u_int16_t *port, char **ip){
     *ip = argv[2];
 }
 
+void logError(int *return_val, int check_val, char *message){
+    if(*return_val != check_val){
+        perror(message);
+        exit(1);
+    }
+}
+
 void receiveMessage(int *client_socket, char *recvd_data){
     recv(*client_socket, recvd_data, MESSAGE_SIZE, 0);
 }

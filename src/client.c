@@ -18,12 +18,6 @@ int main(int argc, char *argv[]){
     char *ip=NULL;
     processArgs(argc, argv, &port, &ip);
     
-    // create the message details struct //
-    struct chatMessage message_details;
-
-    // ask for username //
-    username(&message_details);
-    
     // create the client socket //
     int client_socket = socket(AF_INET, SOCK_STREAM, 0);
 
@@ -31,13 +25,20 @@ int main(int argc, char *argv[]){
     struct sockaddr_in server_address;
     server_address.sin_family = AF_INET;
     server_address.sin_port = htons(port);
-    inet_pton(AF_INET, ip, &server_address.sin_addr.s_addr);
+    int check_inet = inet_pton(AF_INET, ip, &server_address.sin_addr.s_addr);
+    logError(&check_inet, 1, "Error! Wrong IP");
 
     // connect to the server //
     if(connect(client_socket, (const struct sockaddr*)&server_address, sizeof(server_address)) != 0){
         printf("Error, can't connect to the server");
         fflush(stdout);
     }
+
+    // create the message details struct //
+    struct chatMessage message_details;
+
+    // ask for username //
+    username(&message_details);
 
     // create the fd and fill it with incoming connection and keyboard input //
     fd_set socket_fds;

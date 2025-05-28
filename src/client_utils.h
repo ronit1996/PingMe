@@ -10,5 +10,6 @@ void username(struct chatMessage *msg_details_struct);
 void printMessage(struct chatMessage *msg_details);
 void readInput(struct chatMessage *msg_details);
 bool commandOutput(struct chatMessage *msg_details);
+void logError(int *return_val, int check_val, char *message);
 
 #endif
