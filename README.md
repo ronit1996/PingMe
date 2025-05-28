@@ -44,8 +44,7 @@
 ```bash
 git clone https://github.com/yourusername/PingMe.git
 cd PingMe
-gcc Server_Files/server.c Server_Files/server_utils.c message.c -o server
-gcc Client_Files/client.c Client_Files/client_utils.c message.c -o client
+make
 ```
 
 ---
