@@ -1,25 +1,29 @@
-#include "stdio.h"
-#include "stdlib.h"
-#include "stdbool.h"
-#include "string.h"
-#include "sys/socket.h"
-#include "sys/types.h"
-#include "sys/select.h"
-#include "arpa/inet.h"
-#include "netinet/in.h"
-#include "unistd.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <string.h>
+#include <sys/socket.h>
+#include <sys/types.h>
+#include <sys/select.h>
+#include <arpa/inet.h>
+#include <netinet/in.h>
+#include <unistd.h>
 
 #include "server_utils.h"
 
-int main(){
+int main(int argc, char *argv[]){
+    // fill in details using the command line arguments //
+    u_int16_t port;
+    processArgs(argc, argv, &port);
+
     // creat the server socket //
     int server_socket = socket(AF_INET, SOCK_STREAM, 0);
 
     // fill the address struct with IP, protocol and port //
     struct sockaddr_in server_address;
     server_address.sin_family = AF_INET;
-    server_address.sin_port = htons(9002);
-    inet_pton(AF_INET, "0.0.0.0", &server_address.sin_addr.s_addr);
+    server_address.sin_port = htons(port);
+    inet_pton(AF_INET, IP, &server_address.sin_addr.s_addr);
 
     // bind the address to the server //
     logError(bind(server_socket, (struct sockaddr *)&server_address, sizeof(server_address)), "Failed to bind to socket");

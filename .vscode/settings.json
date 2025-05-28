@@ -3,6 +3,7 @@
         "inet.h": "c",
         "socket.h": "c",
         "select.h": "c",
-        "stdio.h": "c"
+        "stdio.h": "c",
+        "client_utils.h": "c"
     }
 }

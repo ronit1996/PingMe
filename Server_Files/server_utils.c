@@ -9,6 +9,14 @@
 #include <unistd.h>
 #include "../message.h"
 
+void processArgs(int argc, char *argv[], u_int16_t *port){
+    if(argc != 2){
+        fprintf(stderr, "Usage: %s <port>", argv[0]);
+        exit(1);
+    }
+    *port = atoi(argv[1]);
+}
+
 void print_client_details(char *client_ip){
     printf("Connected: %s\n", client_ip);
     fflush(stdout);
@@ -64,10 +72,10 @@ void sendMessageToAll(int *max_fd, int *fd_recv, int *server_socket, fd_set *mas
 
 void handleDisconnection(int *fd_recv, fd_set *master_fd, char *client_ip){
     close(*fd_recv);
-        FD_CLR(*fd_recv, master_fd);
-        // Print the disconnection message //
-        printf("Disconnected from %s\n", client_ip);
-        fflush(stdout);
+    FD_CLR(*fd_recv, master_fd);
+    // Print the disconnection message //
+    printf("Disconnected from %s\n", client_ip);
+    fflush(stdout);
 }
 
 void echoMessage(int *fd_recv, int *max_fd, fd_set *master_fd, int *server_socket, char *client_ip){
@@ -79,7 +87,7 @@ void echoMessage(int *fd_recv, int *max_fd, fd_set *master_fd, int *server_socke
     if(bytes > 0){
         sendMessageToAll(max_fd, fd_recv, server_socket, master_fd, incoming_message);
     }else{
-    // close the client gracefully if cient exits //
-    handleDisconnection(fd_recv, master_fd, client_ip);
+        // close the client gracefully if cient exits //
+        handleDisconnection(fd_recv, master_fd, client_ip);
     }
 }
