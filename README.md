@@ -55,13 +55,13 @@ gcc Client_Files/client.c Client_Files/client_utils.c message.c -o client
 Run the server first:
 
 ```bash
-./server port
+./server <port>
 ```
 
 Then launch multiple clients:
 
 ```bash
-./client port server-ip
+./client <port> <server-ip>
 ```
 
 Clients can then type messages that are broadcasted to all others.

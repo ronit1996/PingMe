@@ -7,7 +7,7 @@
 #include <arpa/inet.h>
 #include "server_utils.h"
 #include <unistd.h>
-#include "../message.h"
+#include "message.h"
 
 void processArgs(int argc, char *argv[], u_int16_t *port){
     if(argc != 2){

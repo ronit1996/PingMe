@@ -1,7 +1,7 @@
 #ifndef CLIENT_UTILS_H
 #define CLIENT_UTILS_H
 #include "sys/select.h"
-#include "../message.h"
+#include "message.h"
 
 void processArgs(int argc, char *argv[], u_int16_t *port, char *ip);
 void receiveMessage(int *client_socket, char *recvd_data);

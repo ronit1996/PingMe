@@ -6,7 +6,7 @@
 #include <unistd.h>
 #include <stdbool.h>
 #include <string.h>
-#include "../message.h"
+#include "message.h"
 
 void processArgs(int argc, char *argv[], u_int16_t *port, char *ip){
     if(argc != 3){

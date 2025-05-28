@@ -10,7 +10,7 @@
 #include <unistd.h>
 
 #include "client_utils.h"
-#include "../message.h"
+#include "message.h"
 
 int main(int argc, char *argv[]){
     // process the command line arguments //
